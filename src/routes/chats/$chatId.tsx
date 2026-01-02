@@ -1,9 +1,17 @@
-import { createFileRoute } from '@tanstack/react-router'
+// src/routes/chats/$chatId.tsx
+import { createFileRoute } from "@tanstack/react-router";
+import AppLayout from "@/Components/Layout/AppLayout";
+// import ChatRoomPage from "@/pages/chats/ChatRoomPage";
 
-export const Route = createFileRoute('/chats/$chatId')({
-  component: RouteComponent,
-})
+export const Route = createFileRoute("/chats/$chatId")({
+  component: ChatRoute,
+});
 
-function RouteComponent() {
-  return <div>Hello "/chats/$chatId"!</div>
+function ChatRoute() {
+  return (
+    <AppLayout>
+      {/* <ChatRoomPage /> */}
+      <h1>hello</h1>
+    </AppLayout>
+  );
 }
