@@ -1,5 +1,5 @@
 // src/components/layout/AppLayout.tsx
-import Sidebar from "@/Components/chat/Sidebar";
+import Sidebar from "@/Components/chat/SideBar/index";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
