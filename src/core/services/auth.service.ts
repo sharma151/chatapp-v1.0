@@ -1,17 +1,15 @@
 import { toast } from "react-toastify";
-import apiClient from "@/core/services/apiClient";
+import httpBase from "@/core/services/httpBase";
 import { AxiosError, type AxiosResponse } from "axios";
 
 // --- Types ---
 
-// Define the shape of the data required for login
 export interface LoginPayload {
   email?: string;
   password?: string;
   [key: string]: unknown;
 }
 
-// Define the shape of the data required for registration
 export interface RegisterPayload {
   name?: string;
   email?: string;
@@ -20,7 +18,6 @@ export interface RegisterPayload {
   [key: string]: unknown;
 }
 
-// Define what the User object looks like (customize based on your backend)
 export interface UserData {
   _id: string;
   email: string;
@@ -39,7 +36,7 @@ export const Handlelogin = async (
   formData: LoginPayload
 ): Promise<UserData | undefined> => {
   try {
-    const response: AxiosResponse = await apiClient.post(
+    const response: AxiosResponse = await httpBase.post(
       "/users/login",
       formData
     );
@@ -62,7 +59,7 @@ export const Handleregister = async (
   formData: RegisterPayload
 ): Promise<AxiosResponse | undefined> => {
   try {
-    const response: AxiosResponse = await apiClient.post(
+    const response: AxiosResponse = await httpBase.post(
       "/users/register",
       formData
     );
@@ -77,7 +74,7 @@ export const Handleregister = async (
 
 export const Handlelogout = async (): Promise<AxiosResponse | undefined> => {
   try {
-    const response: AxiosResponse = await apiClient.post("/users/logout");
+    const response: AxiosResponse = await httpBase.post("/users/logout");
     return response;
   } catch (error) {
     const err = error as Error;
@@ -90,7 +87,7 @@ export const HandleForgotPassword = async (
   email: string
 ): Promise<AxiosResponse | undefined> => {
   try {
-    const response: AxiosResponse = await apiClient.post(
+    const response: AxiosResponse = await httpBase.post(
       "/users/forgot-password",
       {
         email,

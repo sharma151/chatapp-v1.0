@@ -1,5 +1,5 @@
 import { create } from "zustand";
-
+import { persist } from "zustand/middleware";
 export type AuthUser = {
   id: string;
   name: string;
@@ -11,36 +11,36 @@ type AuthState = {
   isAuthenticated: boolean;
   accessToken: string | null;
 
-  login: (payload: {
-    user: AuthUser;
-    accessToken: string;
-  }) => void;
+  login: (payload: { user: AuthUser; accessToken: string }) => void;
 
   logout: () => void;
 };
 
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  isAuthenticated: false,
-  accessToken: null,
-
-  login: ({ user, accessToken }) => {
-    localStorage.setItem("accessToken", accessToken);
-
-    set({
-      user,
-      accessToken,
-      isAuthenticated: true,
-    });
-  },
-
-  logout: () => {
-    localStorage.removeItem("accessToken");
-
-    set({
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
       user: null,
-      accessToken: null,
       isAuthenticated: false,
-    });
-  },
-}));
+      accessToken: null,
+
+      login: ({ user, accessToken }) => {
+        set({
+          user,
+          accessToken,
+          isAuthenticated: true,
+        });
+      },
+
+      logout: () => {
+        set({
+          user: null,
+          accessToken: null,
+          isAuthenticated: false,
+        });
+      },
+    }),
+    {
+      name: "auth-storage",
+    }
+  )
+);
