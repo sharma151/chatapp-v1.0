@@ -5,7 +5,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="h-screen flex">
       {/* Left Sidebar */}
-      <div className="w-95 border-r">
+      <div className="w-120 border-r">
         <Sidebar />
       </div>
 
