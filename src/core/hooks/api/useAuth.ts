@@ -1,24 +1,22 @@
 import { useMutation } from "@tanstack/react-query";
-import {
-  Handlelogin,
-  Handleregister,
-  Handlelogout,
-  type LoginPayload,
-  type RegisterPayload,
-  // type LoginResponse,
-} from "@/core/services/auth.service";
+import AuthService from "@/core/services/auth.service";
 import { useAuthStore } from "@/app/store/auth.store";
 import { useToast } from "../common/useToast";
 import { useNavigate } from "@tanstack/react-router";
+import type {
+  LoginFormInterface,
+  RegisterFormInterface,
+} from "@/@types/forms/auth";
 export const useAuth = () => {
   const loginStore = useAuthStore((state) => state.login);
   const logoutStore = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
   const { success: Success } = useToast();
 
-  // 🔐 LOGIN
+  // LOGIN
   const loginMutation = useMutation({
-    mutationFn: (payload: LoginPayload) => Handlelogin(payload),
+    mutationFn: async (payload: LoginFormInterface) =>
+      await AuthService.login(payload),
 
     onSuccess: (data) => {
       loginStore({
@@ -35,17 +33,18 @@ export const useAuth = () => {
     },
   });
 
-  // 📝 REGISTER
+  // REGISTER
   const registerMutation = useMutation({
-    mutationFn: (payload: RegisterPayload) => Handleregister(payload),
+    mutationFn: (payload: RegisterFormInterface) =>
+      AuthService.register(payload),
     onSuccess: () => {
       Success("Registration successful. Please login.");
     },
   });
 
-  // 🚪 LOGOUT
+  // LOGOUT
   const logoutMutation = useMutation({
-    mutationFn: Handlelogout,
+    mutationFn: AuthService.logout,
     onSuccess: () => {
       logoutStore();
       Success("Logged out successfully");
