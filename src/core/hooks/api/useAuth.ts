@@ -8,19 +8,19 @@ import {
   // type LoginResponse,
 } from "@/core/services/auth.service";
 import { useAuthStore } from "@/app/store/auth.store";
-import { toast } from "react-toastify";
+import { useToast } from "../common/useToast";
 import { useNavigate } from "@tanstack/react-router";
 export const useAuth = () => {
   const loginStore = useAuthStore((state) => state.login);
   const logoutStore = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
+  const { success: Success } = useToast();
 
   // 🔐 LOGIN
   const loginMutation = useMutation({
     mutationFn: (payload: LoginPayload) => Handlelogin(payload),
 
     onSuccess: (data) => {
-      console.log("Login Data:", data);
       loginStore({
         user: {
           id: data?.user?._id || "",
@@ -31,6 +31,7 @@ export const useAuth = () => {
       });
 
       navigate({ to: "/chats" });
+      Success("Logged in successfully");
     },
   });
 
@@ -38,7 +39,7 @@ export const useAuth = () => {
   const registerMutation = useMutation({
     mutationFn: (payload: RegisterPayload) => Handleregister(payload),
     onSuccess: () => {
-      toast.success("Registration successful. Please login.");
+      Success("Registration successful. Please login.");
     },
   });
 
@@ -47,7 +48,7 @@ export const useAuth = () => {
     mutationFn: Handlelogout,
     onSuccess: () => {
       logoutStore();
-      toast.success("Logged out successfully");
+      Success("Logged out successfully");
     },
   });
 
