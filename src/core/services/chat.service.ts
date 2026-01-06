@@ -5,6 +5,7 @@ import { handleError } from "@/utils/http.utils";
 import type { AxiosResponseInterface } from "@/@types/responses/api-response";
 
 class ChatService {
+  //Fetch chat list
   static async GetChatList() {
     try {
       const response: AxiosResponseInterface<unknown> =
@@ -14,7 +15,7 @@ class ChatService {
       throw handleError(error as AxiosError);
     }
   }
-
+  //Fetch Available user list
   static async GetAvailableUsers() {
     try {
       const response = await httpBase.get("/chat-app/chats/users");
@@ -24,6 +25,17 @@ class ChatService {
     }
   }
 
+  //create one to one chat
+  static async CreateOneToOneChat(userId: string) {
+    try {
+      const response = await httpBase.post(`/chat-app/chats/c/${userId}`);
+      return response?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
+
+  //Delete chat by ID
   static async DeleteChat(chatId: string) {
     try {
       const response = await httpBase.delete(

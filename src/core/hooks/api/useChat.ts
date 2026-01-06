@@ -16,7 +16,15 @@ export const useChat = () => {
     queryFn: ChatService.GetChatList,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
+  //create one to one chat
+  const createOneToOneChat = useMutation({
+    mutationFn: (userId: string) => ChatService.CreateOneToOneChat(userId),
+    onSuccess: () => {
+      fetchChatList.refetch();
+    },
+  });
 
+  //Delete chat by ID
   const DeleteChat = useMutation({
     mutationFn: (chatId: string) => ChatService.DeleteChat(chatId),
     onSuccess: () => {
@@ -28,5 +36,6 @@ export const useChat = () => {
     chatList: fetchChatList?.data?.data,
     availableUsers: fetchAvailableUsers?.data?.data,
     DeleteChat: DeleteChat.mutate,
+    createOneToOneChat: createOneToOneChat.mutate,
   };
 };
