@@ -5,9 +5,12 @@ import CustomDropdown from "@/Components/UI/Dropdown";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import type { MenuProps } from "antd";
 import { MdDelete } from "react-icons/md";
+import { useNavigate } from "@tanstack/react-router";
 
 const AvailableUser = () => {
   const { chatList, DeleteChat } = useChat();
+  const navigate = useNavigate();
+
   const items: MenuProps["items"] = [
     { key: "Delete", label: "Delete", icon: <MdDelete size={16} /> },
   ];
@@ -18,33 +21,43 @@ const AvailableUser = () => {
       DeleteChat(chatId);
     }
   };
+  const handleRowClick = (chatId: string, userId?: string) => {
+    navigate({
+      to: "/chats/$chatId",
+      params: { chatId: chatId },
+      search: { userId: userId },
+    });
+  };
+
   return (
     <>
       <div className="p-4 ">
         <h2 className="text-md font-semibold mb-2">Available Users</h2>
         <div className="space-y-1 overflow-y-auto max-h-96">
           {Array.isArray(chatList) && chatList.length > 0 ? (
-            chatList.map((user) => (
+            chatList.map((chat) => (
               <div
-                key={user._id}
-                className="flex items-center border-b  justify-between border-gray-200 space-x-3  p-2 hover:rounded-lg hover:bg-gray-100"
+                key={chat._id}
+                onClick={() =>
+                  handleRowClick(chat._id, chat?.participants?.[0]?._id)
+                }
+                className="flex items-center border-b justify-between border-gray-200 space-x-3 p-2 hover:rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
               >
-                {" "}
-                <div className="flex  items-center gap-3">
+                <div className="flex items-center gap-3">
                   <img
-                    src={user.avatar?.url || defaultaimage}
-                    alt={user?.participants?.[0]?.username}
+                    src={chat.avatar?.url || defaultaimage}
+                    alt={chat?.participants?.[0]?.username}
                     className="w-10 h-10 rounded-full"
                   />
                   <span className="text-gray-800">
-                    {user?.participants?.[0]?.username}
+                    {chat?.participants?.[0]?.username}
                   </span>
                 </div>
-                <div>
+                <div onClick={(e) => e.stopPropagation()}>
                   <CustomDropdown
                     items={items}
                     triggerContent={<BsThreeDotsVertical size={18} />}
-                    onMenuClick={(e) => handleMenuClick(e, user._id)}
+                    onMenuClick={(e) => handleMenuClick(e, chat._id)}
                   />
                 </div>
               </div>
