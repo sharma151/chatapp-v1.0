@@ -26,7 +26,7 @@ const AllUsersList = ({ onBack }: AllUsersListProps) => {
       </div>
 
       {/* User List */}
-      <div className="space-y-1 overflow-y-auto max-h-96">
+      <div className="space-y-1 overflow-y-auto max-h-screen mb-2 px-4">
         {Array.isArray(availableUsers) && availableUsers.length > 0 ? (
           availableUsers.map((user) => (
             <div
