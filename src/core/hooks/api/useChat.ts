@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import ChatService from "@/core/services/chat.service";
 
 export const useChat = () => {
@@ -17,8 +17,16 @@ export const useChat = () => {
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 
+  const DeleteChat = useMutation({
+    mutationFn: (chatId: string) => ChatService.DeleteChat(chatId),
+    onSuccess: () => {
+      fetchChatList.refetch();
+    },
+  });
+
   return {
     chatList: fetchChatList?.data?.data,
     availableUsers: fetchAvailableUsers?.data?.data,
+    DeleteChat: DeleteChat.mutate,
   };
 };

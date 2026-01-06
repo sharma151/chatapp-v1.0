@@ -23,5 +23,16 @@ class ChatService {
       throw handleError(error as AxiosError);
     }
   }
+
+  static async DeleteChat(chatId: string) {
+    try {
+      const response = await httpBase.delete(
+        `/chat-app/chats/remove/${chatId}`
+      );
+      return response?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
 }
 export default ChatService;
