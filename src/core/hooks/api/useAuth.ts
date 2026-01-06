@@ -47,6 +47,7 @@ export const useAuth = () => {
     mutationFn: AuthService.logout,
     onSuccess: () => {
       logoutStore();
+      navigate({ to: "/auth/login" });
       Success("Logged out successfully");
     },
   });
