@@ -5,8 +5,8 @@ import { handleError } from "@/utils/http.utils";
 import type { AxiosResponseInterface } from "@/@types/responses/api-response";
 
 class ChatService {
-  //Fetch chat list
-  static async GetChatList() {
+  //Fetch all users
+  static async GetAllUser() {
     try {
       const response: AxiosResponseInterface<unknown> =
         await httpBase.get("/chat-app/chats");

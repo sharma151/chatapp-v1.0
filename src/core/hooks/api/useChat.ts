@@ -13,9 +13,10 @@ export const useChat = () => {
   //Fetch chat list
   const fetchChatList = useQuery({
     queryKey: ["chatList"],
-    queryFn: ChatService.GetChatList,
+    queryFn: ChatService.GetAllUser,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
+
   //create one to one chat
   const createOneToOneChat = useMutation({
     mutationFn: (userId: string) => ChatService.CreateOneToOneChat(userId),
