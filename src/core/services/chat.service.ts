@@ -46,5 +46,26 @@ class ChatService {
       throw handleError(error as AxiosError);
     }
   }
+
+  //Fetch chats by ID
+  static async GetChatById(chatId: string) {
+    try {
+      const response = await httpBase.get(`/chat-app/messages/${chatId}`);
+      return response?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
+  //Send message
+  static async SendMessage(chatId: string, content: string) {
+    try {
+      const response = await httpBase.post(`/chat-app/messages/${chatId}`, {
+        content,
+      });
+      return response?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
 }
 export default ChatService;
