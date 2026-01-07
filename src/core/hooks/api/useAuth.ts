@@ -24,6 +24,7 @@ export const useAuth = () => {
           id: data?.user?._id || "",
           name: data?.user?.username || "",
           email: data?.user?.email,
+          avatar: data?.user?.avatar?.url || "",
         },
         accessToken: data?.accessToken || "",
       });

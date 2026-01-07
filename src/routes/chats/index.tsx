@@ -1,10 +1,10 @@
 // src/routes/chats/index.tsx
-import { createFileRoute } from '@tanstack/react-router'
-import AppLayout from '@/Components/Layout/AppLayout'
+import { createFileRoute } from "@tanstack/react-router";
+import AppLayout from "@/Components/Layout/AppLayout";
 
-export const Route = createFileRoute('/chats/')({
+export const Route = createFileRoute("/chats/")({
   component: ChatsHomePage,
-})
+});
 
 function ChatsHomePage() {
   return (
@@ -13,5 +13,5 @@ function ChatsHomePage() {
         Select a chat to start messaging
       </div>
     </AppLayout>
-  )
+  );
 }
