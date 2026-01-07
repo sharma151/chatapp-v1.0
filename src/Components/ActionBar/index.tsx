@@ -1,13 +1,10 @@
-import { useAuthStore } from "@/app/store/auth.store";
+import { useModalStore } from "@/app/store/modal.store";
 
 const ActionBar = () => {
-  const user = useAuthStore((state) => state.user);
-  console.log(user);
+  const { onUserDetailOpen } = useModalStore();
   return (
     <>
-      <div className="w-20 border border-r shrink-0 h-full ">
-        
-      </div>
+      <p onClick={onUserDetailOpen}>open </p>
     </>
   );
 };
