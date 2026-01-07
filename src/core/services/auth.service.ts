@@ -11,6 +11,7 @@ import type { AxiosResponseInterface } from "@/@types/responses/api-response";
 // --- API Functions ---
 
 class AuthService {
+  // User Login
   static async login(credential: LoginFormInterface) {
     try {
       const response: AxiosResponseInterface<AuthResponse> =
@@ -21,6 +22,7 @@ class AuthService {
     }
   }
 
+  // User Registration
   static async register(formData: RegisterFormInterface) {
     try {
       const response: AxiosResponseInterface<RegisterFormInterface> =
@@ -30,7 +32,7 @@ class AuthService {
       throw handleError(error as AxiosError);
     }
   }
-
+  // User Logout
   static async logout() {
     try {
       const response: AxiosResponseInterface<unknown> =
@@ -40,7 +42,7 @@ class AuthService {
       throw handleError(error as AxiosError);
     }
   }
-
+  // Forgot Password
   static async forgotPassword(email: string) {
     try {
       const response: AxiosResponseInterface<null> = await httpBase.post(

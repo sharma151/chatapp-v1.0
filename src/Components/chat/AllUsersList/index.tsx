@@ -1,6 +1,7 @@
 import { FaArrowLeft } from "react-icons/fa";
 import { useChat } from "@/core/hooks/api/useChat";
 import defaultaimage from "@/assets/default-user.webp";
+import { useNavigate } from "@tanstack/react-router";
 
 interface AllUsersListProps {
   onBack: () => void;
@@ -8,9 +9,15 @@ interface AllUsersListProps {
 
 const AllUsersList = ({ onBack }: AllUsersListProps) => {
   const { createOneToOneChat, availableUsers } = useChat();
+  const navigate = useNavigate();
 
   const handleStartChat = (userId: number) => {
     createOneToOneChat(userId.toString());
+    navigate({
+      to: "/chats/$chatId",
+      params: { chatId: userId.toString() },
+      // search: { userId: userId },
+    });
   };
 
   return (

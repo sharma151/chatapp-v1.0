@@ -51,7 +51,7 @@ class ChatService {
   static async GetChatById(chatId: string) {
     try {
       const response = await httpBase.get(`/chat-app/messages/${chatId}`);
-      return response?.data;
+      return response?.data?.data;
     } catch (error) {
       throw handleError(error as AxiosError);
     }
