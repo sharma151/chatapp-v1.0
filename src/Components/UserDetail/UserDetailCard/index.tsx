@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/app/store/auth.store";
+import { useAuthStore } from "@/store/auth.store";
 import { IoCamera } from "react-icons/io5";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { FaArrowLeft } from "react-icons/fa";
@@ -11,19 +11,8 @@ interface AllUsersListProps {
 const UserDetailCard = ({ onBack }: AllUsersListProps) => {
   const user = useAuthStore((state) => state.user);
 
-  // Mock data if user is empty for testing
-  const userData = user || {
-    name: "Saurav Sharma",
-    about: "Hey there! I am using WhatsApp.",
-    phone: "+977 976-3299993",
-    avatar: defaultaimage,
-    email: "example@mail.com",
-  };
-
   return (
     <div className="bg-[#111b21] text-[#e9edef] min-h-screen max-w-md mx-auto flex flex-col font-sans">
-      {/* Header */}
-
       <div className="flex items-center gap-3 p-4 border-b ">
         <button
           onClick={onBack}
@@ -41,11 +30,19 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
       <div className="flex justify-center my-8 relative">
         <div className="relative group">
           <div className="w-48 h-48 rounded-full overflow-hidden border-none">
-            <img
-              src={userData.avatar}
-              alt="Profile"
-              className="w-full h-full object-cover"
-            />
+            {user?.avatar ? (
+              <img
+                src={user?.avatar}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <img
+                src={defaultaimage}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            )}
           </div>
 
           <button
@@ -62,7 +59,7 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
         <section>
           <label className="text-[#00a884] text-sm block mb-4">Name</label>
           <div className="flex items-center justify-between">
-            <span className="text-lg">{userData.name}</span>
+            <span className="text-lg">{user?.name}</span>
             <HiOutlinePencilAlt
               size={20}
               className="text-[#8696a0] cursor-pointer hover:text-[#e9edef]"
@@ -75,7 +72,7 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
           <label className="text-[#8696a0] text-sm block mb-4">Email</label>
           <div className="flex items-center justify-between">
             <span className="text-lg">
-              {userData?.email || "Hey there! I am using WhatsApp."}
+              {user?.email || "Hey there! I am using WhatsApp."}
             </span>
             <HiOutlinePencilAlt
               size={20}

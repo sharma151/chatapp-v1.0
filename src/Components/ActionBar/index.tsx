@@ -1,10 +1,11 @@
-import { useModalStore } from "@/app/store/modal.store";
+import UserDetailActionButton from "../UserDetail";
 
 const ActionBar = () => {
-  const { onUserDetailOpen } = useModalStore();
   return (
     <>
-      <p onClick={onUserDetailOpen}>open </p>
+      <div className="w-18 border  border-r shrink-0 flex flex-col  items-center justify-end pb-4 ">
+        <UserDetailActionButton />
+      </div>
     </>
   );
 };

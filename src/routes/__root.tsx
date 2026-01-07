@@ -1,6 +1,6 @@
 // src/routes/__root.tsx
 import { createRootRoute, Outlet, redirect } from "@tanstack/react-router";
-import { useAuthStore } from "@/app/store/auth.store";
+import { useAuthStore } from "@/store/auth.store";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 export const Route = createRootRoute({

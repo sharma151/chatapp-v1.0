@@ -1,8 +1,8 @@
 import AvailableUser from "@/Components/chat/AvailableUser";
 import SideBarNav from "@/Components/chat/SideBar/SideBarNav/index";
 import AllUsersList from "@/Components/chat/AllUsersList";
-import { useModalStore } from "@/app/store/modal.store";
-import UserDetailCard from "@/Components/UserDetailCard";
+import { useModalStore } from "@/store/modal.store";
+import UserDetailCard from "@/Components/UserDetail/UserDetailCard";
 
 const Sidebar = () => {
   const { onClose, onOpen, isOpen, isUserDetailOpen, onUserDetailClose } =
