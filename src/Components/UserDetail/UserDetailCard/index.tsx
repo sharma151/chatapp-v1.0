@@ -18,7 +18,7 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
   };
 
   return (
-    <div className="bg-[#111b21] text-[#e9edef] min-h-screen max-w-md mx-auto flex flex-col font-sans">
+    <div className="bg-[#111b21] text-[#e9edef] min-h-screen mx-auto flex flex-col font-sans">
       <div className="flex items-center gap-3 p-4 border-b ">
         <button
           onClick={onBack}
