@@ -11,7 +11,7 @@ export const useAuth = () => {
   const loginStore = useAuthStore((state) => state.login);
   const logoutStore = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
-  const { success: Success } = useToast();
+  const { success: Success, error } = useToast();
 
   // LOGIN
   const loginMutation = useMutation({
@@ -66,7 +66,11 @@ export const useAuth = () => {
       await AuthService.UpdataAvatar(formData),
 
     onSuccess: () => {
+      UserProfileDetail.refetch();
       Success("Avatar Updated Succesfully");
+    },
+    onError: (data) => {
+      error(`Uploaded ${data?.message}`);
     },
   });
 
@@ -78,6 +82,6 @@ export const useAuth = () => {
     logout: logoutMutation.mutate,
     isLoggingOut: logoutMutation.isPending,
     updateAvatar: UpdateAvatar.mutate,
-    userdetail: UserProfileDetail.data,
+    userdetail: UserProfileDetail.data?.data?.data,
   };
 };

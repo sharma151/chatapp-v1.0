@@ -55,7 +55,7 @@ export interface AuthResponse {
 }
 export interface ProfileAccount {
   _id: string;
-  avatar: Avatar; // Reusing your existing Avatar interface
+  avatar: Avatar;
   username: string;
   email: string;
   isEmailVerified: boolean;
@@ -63,28 +63,27 @@ export interface ProfileAccount {
 
 export interface UserProfile {
   _id: string;
-  coverImage: Avatar; // Reusing your existing Avatar interface
-  firstName: string;
-  lastName: string;
-  bio: string;
+  coverImage: Avatar;
   dob: string;
   location: string;
   countryCode: string;
-  phoneNumber: string;
   owner: string;
   createdAt: string;
   updatedAt: string;
   __v: number;
-  account: ProfileAccount;
   followersCount: number;
   followingCount: number;
   isFollowing: boolean;
 }
 
-// 3. The API Response wrapper
 export interface UserProfileResponse {
+  account: ProfileAccount;
   statusCode: number;
   data: UserProfile;
+  phoneNumber: string;
   message: string;
   success: boolean;
+  firstName: string;
+  lastName: string;
+  bio: string;
 }

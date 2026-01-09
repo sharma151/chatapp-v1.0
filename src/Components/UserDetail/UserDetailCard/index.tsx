@@ -1,4 +1,3 @@
-import { useAuthStore } from "@/store/auth.store";
 import { IoCamera } from "react-icons/io5";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { FaArrowLeft } from "react-icons/fa";
@@ -11,14 +10,13 @@ interface AllUsersListProps {
 }
 
 const UserDetailCard = ({ onBack }: AllUsersListProps) => {
-  const user = useAuthStore((state) => state.user);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { updateAvatar } = useAuth();
+  const { updateAvatar, userdetail } = useAuth();
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();
   };
-  
+
   return (
     <div className="bg-[#111b21] text-[#e9edef] min-h-screen max-w-md mx-auto flex flex-col font-sans">
       <div className="flex items-center gap-3 p-4 border-b ">
@@ -35,12 +33,12 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
         <h1 className="text-xl font-medium">Profile</h1>
       </div>
 
-      <div className="flex justify-center my-8 relative">
-        <div className="relative group">
+      <div className="flex flex-col items-center my-8 relative">
+        <div className="relative group mb-4">
           <div className="w-48 h-48 rounded-full overflow-hidden border-none">
-            {user?.avatar ? (
+            {userdetail?.account?.avatar?.url ? (
               <img
-                src={user?.avatar}
+                src={userdetail?.account?.avatar?.url}
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
@@ -74,14 +72,20 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
             <IoCamera size={20} className="text-white" />
           </button>
         </div>
+        <section className="flex  flex-col items-center">
+          <label className="text-[#00a884] text-sm  w-fit">BIO</label>
+          <div className="">
+            <span className="text-lg">{userdetail?.bio}</span>
+          </div>
+        </section>
       </div>
 
       <div className="flex-1 space-y-8 p-8">
         {/* Name Section */}
         <section>
-          <label className="text-[#00a884] text-sm block mb-4">Name</label>
+          <label className="text-[#00a884] text-sm block mb-4">User name</label>
           <div className="flex items-center justify-between">
-            <span className="text-lg">{user?.name}</span>
+            <span className="text-lg">{userdetail?.account?.username}</span>
             <HiOutlinePencilAlt
               size={20}
               className="text-[#8696a0] cursor-pointer hover:text-[#e9edef]"
@@ -89,12 +93,36 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
           </div>
         </section>
 
+        <section>
+          <label className="text-[#8696a0] text-sm block mb-4">Full Name</label>
+          <div className="flex items-center justify-between">
+            <span className="text-lg">
+              {userdetail?.firstName} {userdetail?.lastName}
+            </span>
+            <HiOutlinePencilAlt
+              size={20}
+              className="text-[#8696a0] cursor-pointer hover:text-[#e9edef]"
+            />
+          </div>
+        </section>
         {/* About Section */}
         <section>
           <label className="text-[#8696a0] text-sm block mb-4">Email</label>
           <div className="flex items-center justify-between">
             <span className="text-lg">
-              {user?.email || "Hey there! I am using WhatsApp."}
+              {userdetail?.account?.email || "Hey there! I am using WhatsApp."}
+            </span>
+            <HiOutlinePencilAlt
+              size={20}
+              className="text-[#8696a0] cursor-pointer hover:text-[#e9edef]"
+            />
+          </div>
+        </section>
+        <section>
+          <label className="text-[#8696a0] text-sm block mb-4">Phone</label>
+          <div className="flex items-center justify-between">
+            <span className="text-lg">
+              {userdetail?.phoneNumber || "Hey there! I am using WhatsApp."}
             </span>
             <HiOutlinePencilAlt
               size={20}
