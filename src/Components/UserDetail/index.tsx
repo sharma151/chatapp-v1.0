@@ -1,9 +1,10 @@
-import { useAuthStore } from "@/store/auth.store";
+import { useAuth } from "@/core/hooks/api/useAuth";
 import { useModalStore } from "@/store/modal.store";
+import defaultImage from "@/assets/default-user.webp";
 
 const UserDetailActionButton = () => {
   const { onUserDetailOpen } = useModalStore();
-  const user = useAuthStore((state) => state.user);
+  const { userdetail } = useAuth();
   return (
     <>
       <div className="w-18 shrink-0 flex flex-col  items-center justify-end  ">
@@ -12,7 +13,7 @@ const UserDetailActionButton = () => {
           onClick={onUserDetailOpen}
         >
           <img
-            src={user?.avatar}
+            src={userdetail?.account?.avatar?.url || defaultImage}
             alt="Profile"
             className="w-full h-full object-cover"
           />
