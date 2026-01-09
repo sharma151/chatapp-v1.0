@@ -53,6 +53,16 @@ export const useAuth = () => {
     },
   });
 
+  //Update Avatar
+  const UpdateAvatar = useMutation({
+    mutationFn: async (formData: FormData) =>
+      await AuthService.UpdataAvatar(formData),
+
+    onSuccess: () => {
+      Success("Avatar Updated Succesfully");
+    },
+  });
+
   return {
     login: loginMutation.mutate,
     isLoggingIn: loginMutation.isPending,
@@ -62,5 +72,6 @@ export const useAuth = () => {
 
     logout: logoutMutation.mutate,
     isLoggingOut: logoutMutation.isPending,
+    updateAvatar: UpdateAvatar.mutate,
   };
 };

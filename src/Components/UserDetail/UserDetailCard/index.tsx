@@ -3,6 +3,8 @@ import { IoCamera } from "react-icons/io5";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { FaArrowLeft } from "react-icons/fa";
 import defaultaimage from "@/assets/default-user.webp";
+import { useRef } from "react";
+import { useAuth } from "@/core/hooks/api/useAuth";
 
 interface AllUsersListProps {
   onBack: () => void;
@@ -10,7 +12,13 @@ interface AllUsersListProps {
 
 const UserDetailCard = ({ onBack }: AllUsersListProps) => {
   const user = useAuthStore((state) => state.user);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { updateAvatar } = useAuth();
 
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+  
   return (
     <div className="bg-[#111b21] text-[#e9edef] min-h-screen max-w-md mx-auto flex flex-col font-sans">
       <div className="flex items-center gap-3 p-4 border-b ">
@@ -44,8 +52,22 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
               />
             )}
           </div>
-
+          <input
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                const formData = new FormData();
+                formData.append("avatar", file);
+                updateAvatar(formData);
+              }
+            }}
+          />
           <button
+            onClick={handleButtonClick}
             className="absolute bottom-2 left-2 bg-[#00a884] p-3 rounded-full shadow-lg hover:bg-[#06cf9c] transition-colors"
             title="Edit Avatar"
           >

@@ -42,6 +42,21 @@ class AuthService {
       throw handleError(error as AxiosError);
     }
   }
+
+  //Updata user Avatar
+  static async UpdataAvatar(formData: FormData) {
+    try {
+      const response = await httpBase.patch("/users/avatar", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
+
   // Forgot Password
   static async forgotPassword(email: string) {
     try {
