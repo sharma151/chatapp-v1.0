@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import AuthService from "@/core/services/auth.service";
 import { useAuthStore } from "@/store/auth.store";
 import { useToast } from "../common/useToast";
@@ -43,6 +43,13 @@ export const useAuth = () => {
     },
   });
 
+  //USER PROFILE DETAIL
+
+  const UserProfileDetail = useQuery({
+    queryKey: ["profiledetail"],
+    queryFn: AuthService.fetchProfile,
+  });
+
   // LOGOUT
   const logoutMutation = useMutation({
     mutationFn: AuthService.logout,
@@ -66,12 +73,11 @@ export const useAuth = () => {
   return {
     login: loginMutation.mutate,
     isLoggingIn: loginMutation.isPending,
-
     register: registerMutation.mutate,
     isRegistering: registerMutation.isPending,
-
     logout: logoutMutation.mutate,
     isLoggingOut: logoutMutation.isPending,
     updateAvatar: UpdateAvatar.mutate,
+    userdetail: UserProfileDetail.data,
   };
 };

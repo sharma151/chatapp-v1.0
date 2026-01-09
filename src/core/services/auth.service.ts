@@ -5,6 +5,7 @@ import type {
   AuthResponse,
   LoginFormInterface,
   RegisterFormInterface,
+  UserProfileResponse,
 } from "@/@types/forms/auth";
 import type { AxiosResponseInterface } from "@/@types/responses/api-response";
 
@@ -32,6 +33,19 @@ class AuthService {
       throw handleError(error as AxiosError);
     }
   }
+
+  //Fetch Profile Details
+
+  static async fetchProfile() {
+    try {
+      const response: AxiosResponseInterface<UserProfileResponse> =
+        await httpBase.get("/social-media/profile");
+      return response;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
+
   // User Logout
   static async logout() {
     try {
