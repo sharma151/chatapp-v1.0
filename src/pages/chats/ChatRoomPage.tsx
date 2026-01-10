@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import ChatService from "@/core/services/chat.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import ChatRoomNav from "@/Components/chat/ChatRoomNav";
+import { useAuthStore } from "@/store/auth.store";
 
 interface Sender {
   _id: string;
@@ -28,7 +30,8 @@ interface ChatRoomPageProps {
   userId?: string;
 }
 
-const ChatRoomPage = ({ chatId, userId }: ChatRoomPageProps) => {
+const ChatRoomPage = ({ chatId }: ChatRoomPageProps) => {
+  const loggedInUserID = useAuthStore.getState().user;
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
@@ -89,9 +92,10 @@ const ChatRoomPage = ({ chatId, userId }: ChatRoomPageProps) => {
 
   return (
     <div className="flex flex-col h-screen bg-[#efeae2]">
+      <ChatRoomNav />
       <div className="flex-1 overflow-y-scroll p-4 flex flex-col space-y-3">
         {messages?.map((message: Message) => {
-          const isSender = message.sender._id === userId;
+          const isSender = message.sender._id === loggedInUserID?.id;
           const hasAttachments =
             message.attachments && message.attachments.length > 0;
 
