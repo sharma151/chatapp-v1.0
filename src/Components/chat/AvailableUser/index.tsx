@@ -21,11 +21,11 @@ const AvailableUser = () => {
       DeleteChat(chatId);
     }
   };
-  const handleRowClick = (chatId: string, userId?: string) => {
+  const handleRowClick = (chatId: string, user?: string) => {
     navigate({
       to: "/chats/$chatId",
       params: { chatId: chatId },
-      search: { userId: userId },
+      search: { userId: user },
     });
   };
 
@@ -39,7 +39,7 @@ const AvailableUser = () => {
               <div
                 key={chat._id}
                 onClick={() =>
-                  handleRowClick(chat._id, chat?.participants?.[0]?._id)
+                  handleRowClick(chat._id, chat?.participants?.[0]?.username)
                 }
                 className="flex items-center border-b justify-between border-gray-200 space-x-3 p-2 hover:rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
               >

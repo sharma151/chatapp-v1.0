@@ -27,10 +27,10 @@ interface Message {
 
 interface ChatRoomPageProps {
   chatId: string;
-  userId?: string;
+  userName?: string;
 }
 
-const ChatRoomPage = ({ chatId }: ChatRoomPageProps) => {
+const ChatRoomPage = ({ chatId, userName }: ChatRoomPageProps) => {
   const loggedInUserID = useAuthStore.getState().user;
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -48,6 +48,13 @@ const ChatRoomPage = ({ chatId }: ChatRoomPageProps) => {
       );
     },
   });
+
+  // const otherMessage = messages?.find(
+  //   (msg) => msg.sender?._id !== loggedInUserID?.id
+  // );
+  // const otherUsername = otherMessage?.sender?.username || "Unknown User";
+
+  // console.log(otherUsername);
 
   const sendMessageMutation = useMutation({
     mutationFn: ({ chatId, content }: { chatId: string; content: string }) =>
@@ -92,7 +99,7 @@ const ChatRoomPage = ({ chatId }: ChatRoomPageProps) => {
 
   return (
     <div className="flex flex-col h-screen bg-[#efeae2]">
-      <ChatRoomNav />
+      <ChatRoomNav userName={userName} />
       <div className="flex-1 overflow-y-scroll p-4 flex flex-col space-y-3">
         {messages?.map((message: Message) => {
           const isSender = message.sender._id === loggedInUserID?.id;

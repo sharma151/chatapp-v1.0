@@ -35,7 +35,7 @@ httpBase.interceptors.response.use(
       // toast.error("Session expired. Please log in again.");
 
       // Redirect once
-      window.location.replace("/auth/login");
+      // window.location.replace("/auth/login");
     }
 
     return Promise.reject(error);

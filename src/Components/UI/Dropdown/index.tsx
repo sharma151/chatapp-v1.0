@@ -3,8 +3,8 @@ import { Dropdown } from "antd";
 import type { MenuProps, DropDownProps } from "antd";
 
 interface ReusableDropdownProps {
-  items: MenuProps["items"];
-  triggerContent: React.ReactNode;
+  items?: MenuProps["items"];
+  triggerContent?: React.ReactNode;
   onMenuClick?: MenuProps["onClick"]; // 1. Callback to access clicked value
   buttonClassName?: string;
   menuClassName?: string;
