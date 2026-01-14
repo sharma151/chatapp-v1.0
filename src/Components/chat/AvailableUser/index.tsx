@@ -6,10 +6,12 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import type { MenuProps } from "antd";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "@tanstack/react-router";
+import { useAuthStore } from "@/store/auth.store";
 
 const AvailableUser = () => {
   const { chatList, DeleteChat } = useChat();
   const navigate = useNavigate();
+  const loggedInUserID = useAuthStore.getState().user;
 
   const items: MenuProps["items"] = [
     { key: "Delete", label: "Delete", icon: <MdDelete size={16} /> },
@@ -29,35 +31,70 @@ const AvailableUser = () => {
     });
   };
 
+  const loggedInUserId = loggedInUserID?.id;
+
+  const formattedChats = Array.isArray(chatList)
+    ? chatList
+        .map((chat) => {
+          const otherParticipant = chat.participants.find(
+            (p: { _id: string | undefined }) => p._id !== loggedInUserId
+          );
+
+          if (!otherParticipant) {
+            return null;
+          }
+
+          const lastMsg = chat.lastMessage;
+
+          return {
+            chatId: chat._id,
+            otherUsername: otherParticipant.username,
+            otherAvatar: otherParticipant.avatar?.url || "",
+            lastMessage: lastMsg
+              ? {
+                  senderUsername: lastMsg.sender.username,
+                  content: lastMsg.content || "",
+                }
+              : null,
+          };
+        })
+        .filter(Boolean)
+    : [];
+
   return (
     <>
       <div className="p-4 ">
         <h2 className="text-md font-semibold mb-2">Available Users</h2>
         <div className="space-y-1 overflow-y-auto max-h-96">
-          {Array.isArray(chatList) && chatList.length > 0 ? (
-            chatList.map((chat) => (
+          {formattedChats.length > 0 ? (
+            formattedChats.map((chat) => (
               <div
-                key={chat._id}
+                key={chat?.chatId}
                 onClick={() =>
-                  handleRowClick(chat._id, chat?.participants?.[0]?.username)
+                  handleRowClick(chat?.chatId, chat?.otherUsername)
                 }
                 className="flex items-center border-b justify-between border-gray-200 space-x-3 p-2 hover:rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <img
-                    src={chat.avatar?.url || defaultaimage}
-                    alt={chat?.participants?.[0]?.username}
+                    src={chat?.otherAvatar || defaultaimage}
+                    alt={chat?.otherUsername}
                     className="w-10 h-10 rounded-full"
                   />
-                  <span className="text-gray-800">
-                    {chat?.participants?.[0]?.username}
-                  </span>
+                  <div className="flex flex-col">
+                    <span className="text-gray-800 text-md">
+                      {chat?.otherUsername}
+                    </span>
+                    <span className="text-xs text-gray-500 ">
+                      {chat?.lastMessage?.content}
+                    </span>
+                  </div>
                 </div>
                 <div onClick={(e) => e.stopPropagation()}>
                   <CustomDropdown
                     items={items}
                     triggerContent={<BsThreeDotsVertical size={18} />}
-                    onMenuClick={(e) => handleMenuClick(e, chat._id)}
+                    onMenuClick={(e) => handleMenuClick(e, chat?.chatId)}
                   />
                 </div>
               </div>
