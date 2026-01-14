@@ -3,6 +3,8 @@ import ChatService from "@/core/services/chat.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ChatRoomNav from "@/Components/chat/ChatRoomNav";
 import { useAuthStore } from "@/store/auth.store";
+import { useChat } from "@/core/hooks/api/useChat";
+import { useNavigate } from "@tanstack/react-router";
 
 interface Sender {
   _id: string;
@@ -35,7 +37,10 @@ const ChatRoomPage = ({ chatId, userName }: ChatRoomPageProps) => {
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
+  const { DeleteChat } = useChat();
+  const navigate = useNavigate();
 
+  // GET USER CHAT MESSAGES
   const { data: messages, isLoading } = useQuery({
     queryKey: ["chatMessages", chatId],
     queryFn: () => ChatService.GetChatById(chatId),
@@ -49,13 +54,7 @@ const ChatRoomPage = ({ chatId, userName }: ChatRoomPageProps) => {
     },
   });
 
-  // const otherMessage = messages?.find(
-  //   (msg) => msg.sender?._id !== loggedInUserID?.id
-  // );
-  // const otherUsername = otherMessage?.sender?.username || "Unknown User";
-
-  // console.log(otherUsername);
-
+  //SEND MESSAGES
   const sendMessageMutation = useMutation({
     mutationFn: ({ chatId, content }: { chatId: string; content: string }) =>
       ChatService.SendMessage(chatId, content),
@@ -82,6 +81,13 @@ const ChatRoomPage = ({ chatId, userName }: ChatRoomPageProps) => {
     });
   };
 
+  const handleDeleteChat = () => {
+    DeleteChat(chatId);
+    navigate({
+      to: "/chats",
+    });
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -99,7 +105,7 @@ const ChatRoomPage = ({ chatId, userName }: ChatRoomPageProps) => {
 
   return (
     <div className="flex flex-col h-screen bg-[#efeae2]">
-      <ChatRoomNav userName={userName} />
+      <ChatRoomNav userName={userName} handleMenuClick={handleDeleteChat} />
       <div className="flex-1 overflow-y-scroll p-4 flex flex-col space-y-3">
         {messages?.map((message: Message) => {
           const isSender = message.sender._id === loggedInUserID?.id;

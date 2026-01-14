@@ -3,7 +3,13 @@ import type { MenuProps } from "antd";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 
-const ChatRoomNav = ({ userName }: { userName?: string }) => {
+const ChatRoomNav = ({
+  userName,
+  handleMenuClick,
+}: {
+  userName?: string;
+  handleMenuClick?: () => void;
+}) => {
   const items: MenuProps["items"] = [
     { key: "Delete", label: "Delete chat", icon: <MdDelete size={16} /> },
   ];
@@ -13,6 +19,7 @@ const ChatRoomNav = ({ userName }: { userName?: string }) => {
       <CustomDropdown
         items={items}
         triggerContent={<BsThreeDotsVertical size={18} />}
+        onMenuClick={handleMenuClick}
       />
     </div>
   );
