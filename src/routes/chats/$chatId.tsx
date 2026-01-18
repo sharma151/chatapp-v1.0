@@ -1,9 +1,27 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import AppLayout from "@/Components/Layout/AppLayout";
+import ChatRoomPage from "@/pages/chats/ChatRoomPage";
 
-export const Route = createFileRoute('/chats/$chatId')({
-  component: RouteComponent,
-})
+type ChatSearch = {
+  userId?: string;
+};
 
-function RouteComponent() {
-  return <div>Hello "/chats/$chatId"!</div>
+export const Route = createFileRoute("/chats/$chatId")({
+  validateSearch: (search: Record<string, unknown>): ChatSearch => {
+    return {
+      userId: search.userId as string | undefined,
+    };
+  },
+  component: ChatRoute,
+});
+
+function ChatRoute() {
+  const { chatId } = Route.useParams();
+  const { userId } = Route.useSearch();
+
+  return (
+    <AppLayout>
+      <ChatRoomPage chatId={chatId} userName={userId} />
+    </AppLayout>
+  );
 }

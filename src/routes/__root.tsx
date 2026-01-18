@@ -1,15 +1,34 @@
-import * as React from 'react'
-import { Outlet, createRootRoute } from '@tanstack/react-router'
+// src/routes/__root.tsx
+import { createRootRoute, Outlet, redirect } from "@tanstack/react-router";
+import { useAuthStore } from "@/store/auth.store";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 export const Route = createRootRoute({
-  component: RootComponent,
-})
+  beforeLoad: ({ location }) => {
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
 
-function RootComponent() {
+    if (!isAuthenticated && !location.pathname.startsWith("/auth")) {
+      throw redirect({
+        to: "/auth/login",
+      });
+    }
+
+    if (isAuthenticated && location.pathname.startsWith("/auth")) {
+      throw redirect({
+        to: "/chats",
+      });
+    }
+  },
+  component: RootLayout,
+});
+
+function RootLayout() {
   return (
-    <React.Fragment>
-      <div>Hello "__root"!</div>
-      <Outlet />
-    </React.Fragment>
-  )
+    <>
+      <main className="overflow-y-auto w-full ">
+        <Outlet />
+      </main>
+      <TanStackRouterDevtools />
+    </>
+  );
 }

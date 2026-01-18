@@ -13,6 +13,7 @@ import { Route as ChatsIndexRouteImport } from './routes/chats/index'
 import { Route as ChatsChatIdRouteImport } from './routes/chats/$chatId'
 import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
+import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgotPassword'
 import { Route as ChatsGroupCreateRouteImport } from './routes/chats/group/create'
 
 const ChatsIndexRoute = ChatsIndexRouteImport.update({
@@ -35,6 +36,11 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/auth/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
+  id: '/auth/forgotPassword',
+  path: '/auth/forgotPassword',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChatsGroupCreateRoute = ChatsGroupCreateRouteImport.update({
   id: '/chats/group/create',
   path: '/chats/group/create',
@@ -42,6 +48,7 @@ const ChatsGroupCreateRoute = ChatsGroupCreateRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/auth/forgotPassword': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
@@ -49,6 +56,7 @@ export interface FileRoutesByFullPath {
   '/chats/group/create': typeof ChatsGroupCreateRoute
 }
 export interface FileRoutesByTo {
+  '/auth/forgotPassword': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
@@ -57,6 +65,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/auth/forgotPassword': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
@@ -66,6 +75,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/auth/forgotPassword'
     | '/auth/login'
     | '/auth/register'
     | '/chats/$chatId'
@@ -73,6 +83,7 @@ export interface FileRouteTypes {
     | '/chats/group/create'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/auth/forgotPassword'
     | '/auth/login'
     | '/auth/register'
     | '/chats/$chatId'
@@ -80,6 +91,7 @@ export interface FileRouteTypes {
     | '/chats/group/create'
   id:
     | '__root__'
+    | '/auth/forgotPassword'
     | '/auth/login'
     | '/auth/register'
     | '/chats/$chatId'
@@ -88,6 +100,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
   ChatsChatIdRoute: typeof ChatsChatIdRoute
@@ -125,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/forgotPassword': {
+      id: '/auth/forgotPassword'
+      path: '/auth/forgotPassword'
+      fullPath: '/auth/forgotPassword'
+      preLoaderRoute: typeof AuthForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/chats/group/create': {
       id: '/chats/group/create'
       path: '/chats/group/create'
@@ -136,6 +156,7 @@ declare module '@tanstack/react-router' {
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
   ChatsChatIdRoute: ChatsChatIdRoute,
