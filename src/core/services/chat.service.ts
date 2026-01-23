@@ -39,7 +39,7 @@ class ChatService {
   static async DeleteChat(chatId: string) {
     try {
       const response = await httpBase.delete(
-        `/chat-app/chats/remove/${chatId}`
+        `/chat-app/chats/remove/${chatId}`,
       );
       return response?.data;
     } catch (error) {
@@ -62,6 +62,18 @@ class ChatService {
       const response = await httpBase.post(`/chat-app/messages/${chatId}`, {
         content,
       });
+      return response?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
+
+  //Delete Message by chatId & messageId
+  static async Deletemessage(chatId: string, messageId: string) {
+    try {
+      const response = await httpBase.delete(
+        `/chat-app/messages/${chatId}/${messageId}`,
+      );
       return response?.data;
     } catch (error) {
       throw handleError(error as AxiosError);

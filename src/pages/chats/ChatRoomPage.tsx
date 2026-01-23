@@ -5,6 +5,10 @@ import ChatRoomNav from "@/Components/chat/ChatRoomNav";
 import { useAuthStore } from "@/store/auth.store";
 import { useChat } from "@/core/hooks/api/useChat";
 import { useNavigate } from "@tanstack/react-router";
+import type { MenuProps } from "antd";
+import { MdDelete } from "react-icons/md";
+import CustomDropdown from "@/Components/UI/Dropdown";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 interface Sender {
   _id: string;
@@ -49,8 +53,22 @@ const ChatRoomPage = ({ chatId, userName }: ChatRoomPageProps) => {
       if (!Array.isArray(data)) return [];
       return [...data].sort(
         (a: Message, b: Message) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
       );
+    },
+  });
+
+  //Delete Message by chatId and messageId
+  const DeleteMessage = useMutation({
+    mutationFn: ({
+      chatId,
+      messageId,
+    }: {
+      chatId: string;
+      messageId: string;
+    }) => ChatService.Deletemessage(chatId, messageId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chatMessages", chatId] });
     },
   });
 
@@ -87,6 +105,9 @@ const ChatRoomPage = ({ chatId, userName }: ChatRoomPageProps) => {
       to: "/chats",
     });
   };
+  const handleMenuClick = (_id: string) => {
+    DeleteMessage.mutate({ chatId, messageId: _id });
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -102,7 +123,9 @@ const ChatRoomPage = ({ chatId, userName }: ChatRoomPageProps) => {
       </div>
     );
   }
-
+  const items: MenuProps["items"] = [
+    { key: "Delete", label: "Delete chat", icon: <MdDelete size={16} /> },
+  ];
   return (
     <div className="flex flex-col h-screen bg-[#efeae2]">
       <ChatRoomNav userName={userName} handleMenuClick={handleDeleteChat} />
@@ -157,6 +180,15 @@ const ChatRoomPage = ({ chatId, userName }: ChatRoomPageProps) => {
                     minute: "2-digit",
                   })}
                 </p>
+              </div>
+              <div>
+                <CustomDropdown
+                  items={items}
+                  triggerContent={<BsThreeDotsVertical size={18} />}
+                  onMenuClick={() => {
+                    handleMenuClick(message._id);
+                  }}
+                />
               </div>
             </div>
           );
