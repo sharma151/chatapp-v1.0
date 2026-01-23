@@ -8,7 +8,7 @@ import { useNavigate } from "@tanstack/react-router";
 import type { MenuProps } from "antd";
 import { MdDelete } from "react-icons/md";
 import CustomDropdown from "@/Components/UI/Dropdown";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaAngleDown } from "react-icons/fa6";
 
 interface Sender {
   _id: string;
@@ -124,7 +124,7 @@ const ChatRoomPage = ({ chatId, userName }: ChatRoomPageProps) => {
     );
   }
   const items: MenuProps["items"] = [
-    { key: "Delete", label: "Delete chat", icon: <MdDelete size={16} /> },
+    { key: "Delete", label: "Unsend", icon: <MdDelete size={16} /> },
   ];
   return (
     <div className="flex flex-col h-screen bg-[#efeae2]">
@@ -141,7 +141,7 @@ const ChatRoomPage = ({ chatId, userName }: ChatRoomPageProps) => {
               className={`flex ${isSender ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[70%] rounded-lg px-3 py-2 text-sm shadow relative
+                className={`max-w-[70%] rounded-lg px-3 py-2 text-sm shadow relative flex gap-2 group
                   ${
                     isSender
                       ? "bg-[#dcf8c6] rounded-tr-none"
@@ -149,46 +149,51 @@ const ChatRoomPage = ({ chatId, userName }: ChatRoomPageProps) => {
                   }
                 `}
               >
-                {!isSender && (
-                  <p className="text-xs font-bold text-blue-600 mb-1">
-                    {message.sender.username}
+                {isSender ? (
+                  <CustomDropdown
+                    items={items}
+                    buttonClassName="!hidden group-hover:!block absolute top-2 right-2 z-10 bg-white/50 rounded-full p-1"
+                    triggerContent={<FaAngleDown size={12} />}
+                    onMenuClick={() => {
+                      handleMenuClick(message._id);
+                    }}
+                  />
+                ) : (
+                  ""
+                )}
+                <div>
+                  {!isSender && (
+                    <p className="text-xs font-bold text-blue-600 mb-1">
+                      {message.sender.username}
+                    </p>
+                  )}
+
+                  {hasAttachments && (
+                    <div className="mb-2">
+                      {message.attachments!.map((attachment, index) => (
+                        <img
+                          key={index}
+                          src={attachment.url}
+                          alt="attachment"
+                          className="rounded-lg max-h-64 object-cover"
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {message.content && (
+                    <p className="text-gray-900 wrap-break-words leading-relaxed">
+                      {message.content}
+                    </p>
+                  )}
+
+                  <p className="text-[10px] text-gray-500 text-right mt-1 ml-4">
+                    {new Date(message.createdAt).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </p>
-                )}
-
-                {hasAttachments && (
-                  <div className="mb-2">
-                    {message.attachments!.map((attachment, index) => (
-                      <img
-                        key={index}
-                        src={attachment.url}
-                        alt="attachment"
-                        className="rounded-lg max-h-64 object-cover"
-                      />
-                    ))}
-                  </div>
-                )}
-
-                {message.content && (
-                  <p className="text-gray-900 wrap-break-words leading-relaxed">
-                    {message.content}
-                  </p>
-                )}
-
-                <p className="text-[10px] text-gray-500 text-right mt-1 ml-4">
-                  {new Date(message.createdAt).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </p>
-              </div>
-              <div>
-                <CustomDropdown
-                  items={items}
-                  triggerContent={<BsThreeDotsVertical size={18} />}
-                  onMenuClick={() => {
-                    handleMenuClick(message._id);
-                  }}
-                />
+                </div>
               </div>
             </div>
           );
