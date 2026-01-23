@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import ChatService from "@/core/services/chat.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import ChatRoomNav from "@/Components/chat/ChatRoomNav";
+import ChatRoomNav from "@/pages/chats/ChatRoomNav";
 import { useAuthStore } from "@/store/auth.store";
 import { useChat } from "@/core/hooks/api/useChat";
 import { useNavigate } from "@tanstack/react-router";

@@ -1,6 +1,6 @@
-import AvailableUser from "@/Components/chat/AvailableUser";
-import SideBarNav from "@/Components/chat/SideBar/SideBarNav/index";
-import AllUsersList from "@/Components/chat/AllUsersList";
+import AvailableUser from "@/Components/UserList/AvailableUser";
+import SideBarNav from "@/Components/SideBar/SideBarNav/index";
+import AllUsersList from "@/Components/UserList/AllUsersList";
 import { useModalStore } from "@/store/modal.store";
 import UserDetailCard from "@/Components/UserDetail/UserDetailCard";
 

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import AppLayout from "@/Components/Layout/AppLayout";
-import ChatRoomPage from "@/pages/chats/ChatRoomPage";
+import AppLayout from "@/Layout/AppLayout";
+import ChatRoomPage from "@/pages/chats/ChatRoomPage/ChatRoomPage";
 
 type ChatSearch = {
   userId?: string;
