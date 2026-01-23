@@ -33,10 +33,18 @@ export const useChat = () => {
     },
   });
 
+  //Create Group Chat
+  const CreateGroupChat = useMutation({
+    mutationFn: (payload: { name: string; participants: string[] }) => {
+      return ChatService.CreateGroupChat(payload);
+    },
+  });
+
   return {
     chatList: fetchChatList?.data?.data,
     availableUsers: fetchAvailableUsers?.data?.data,
     DeleteChat: DeleteChat.mutate,
     createOneToOneChat: createOneToOneChat.mutate,
+    createGroupChat: CreateGroupChat.mutate,
   };
 };

@@ -1,8 +1,9 @@
 import AvailableUser from "@/Components/UserList/AvailableUser";
 import SideBarNav from "@/Components/SideBar/SideBarNav/index";
-import AllUsersList from "@/Components/UserList/AllUsersList";
+// import AllUsersList from "@/Components/UserList/AllUsersList";
 import { useModalStore } from "@/store/modal.store";
 import UserDetailCard from "@/Components/UserDetail/UserDetailCard";
+import CreateGroupChat from "../CreateGroupChat";
 
 const Sidebar = () => {
   const { onClose, onOpen, isOpen, isUserDetailOpen, onUserDetailClose } =
@@ -14,7 +15,8 @@ const Sidebar = () => {
         {isUserDetailOpen ? (
           <UserDetailCard onBack={onUserDetailClose} />
         ) : isOpen ? (
-          <AllUsersList onBack={onClose} />
+          // <AllUsersList onBack={onClose} />
+          <CreateGroupChat onBack={onClose} />
         ) : (
           <>
             <SideBarNav onOpenNewChat={onOpen} />

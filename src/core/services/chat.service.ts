@@ -79,5 +79,18 @@ class ChatService {
       throw handleError(error as AxiosError);
     }
   }
+
+  //Create Group Chat
+  static async CreateGroupChat(payload: {
+    name: string;
+    participants: string[];
+  }) {
+    try {
+      const response = await httpBase.post("chat-app/chats/group", payload);
+      return response.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
 }
 export default ChatService;
