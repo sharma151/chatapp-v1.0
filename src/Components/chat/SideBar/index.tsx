@@ -10,15 +10,16 @@ const Sidebar = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <SideBarNav onOpenNewChat={onOpen} />
-
       <div className="flex-1 overflow-y-auto">
         {isUserDetailOpen ? (
           <UserDetailCard onBack={onUserDetailClose} />
         ) : isOpen ? (
           <AllUsersList onBack={onClose} />
         ) : (
-          <AvailableUser />
+          <>
+            <SideBarNav onOpenNewChat={onOpen} />
+            <AvailableUser />
+          </>
         )}
       </div>
     </div>
