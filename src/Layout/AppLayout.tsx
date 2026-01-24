@@ -1,6 +1,6 @@
 // src/components/layout/AppLayout.tsx
-import Sidebar from "@/Components/chat/SideBar/index";
-import ActionBar from "../ActionBar";
+import Sidebar from "@/Components/SideBar/index";
+import ActionBar from "@/Components/ActionBar";
 import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {

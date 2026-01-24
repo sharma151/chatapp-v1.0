@@ -39,7 +39,7 @@ class ChatService {
   static async DeleteChat(chatId: string) {
     try {
       const response = await httpBase.delete(
-        `/chat-app/chats/remove/${chatId}`
+        `/chat-app/chats/remove/${chatId}`,
       );
       return response?.data;
     } catch (error) {
@@ -63,6 +63,31 @@ class ChatService {
         content,
       });
       return response?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
+
+  //Delete Message by chatId & messageId
+  static async Deletemessage(chatId: string, messageId: string) {
+    try {
+      const response = await httpBase.delete(
+        `/chat-app/messages/${chatId}/${messageId}`,
+      );
+      return response?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
+
+  //Create Group Chat
+  static async CreateGroupChat(payload: {
+    name: string;
+    participants: string[];
+  }) {
+    try {
+      const response = await httpBase.post("chat-app/chats/group", payload);
+      return response.data;
     } catch (error) {
       throw handleError(error as AxiosError);
     }

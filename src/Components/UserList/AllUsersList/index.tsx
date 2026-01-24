@@ -12,6 +12,7 @@ const AllUsersList = ({ onBack }: AllUsersListProps) => {
   const navigate = useNavigate();
 
   const handleStartChat = (userId: number) => {
+    onBack();
     createOneToOneChat(userId.toString());
     navigate({
       to: "/chats/$chatId",

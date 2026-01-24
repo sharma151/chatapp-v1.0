@@ -1,1 +1,72 @@
 @import "tailwindcss";
+
+/* -----------------------------
+   Design Tokens (Theme)
+-------------------------------- */
+@theme inline {
+  /* ==========================================================================
+	  FONT-FAMILIES
+	  ========================================================================== */
+
+  --font-family-sans:
+    -apple-system, "Archivo", BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+
+  --font-family-mono:
+    "Archivo", source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+
+  /* ==========================================================================
+	  COLOR PALETTES
+	  ========================================================================== */
+
+  --color-blue-50: #d3dcff;
+  --color-blue-100: #b6c5ff;
+  --color-blue-200: #92a7ff;
+  --color-blue-300: #6e8aff;
+  --color-blue-400: #496dff;
+  --color-blue-500: #2550ff;
+  --color-blue-600: #1f43d4;
+  --color-blue-700: #1935aa;
+  --color-blue-800: #132880;
+  --color-blue-900: #0c1b55;
+
+  --color-neutral-50: #d4d4d6;
+  --color-neutral-100: #b7b8ba;
+  --color-neutral-200: #939497;
+  --color-neutral-300: #707175;
+  --color-neutral-400: #4c4e53;
+  --color-neutral-500: #282a30;
+  --color-neutral-600: #212328;
+  --color-neutral-700: #1b1c20;
+  --color-neutral-800: #141518;
+  --color-neutral-900: #0d0e10;
+
+  /* Base */
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+
+  /* Sidebar */
+  --sidebar: #ff134f;
+  --sidebar-foreground: 222 47% 11%;
+  --sidebar-border: 214 32% 91%;
+
+  /* Brand */
+  --primary: 222 89% 53%;
+  --primary-foreground: 0 0% 100%;
+}
+
+/* -----------------------------
+   Dark Mode
+-------------------------------- */
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --sidebar: 222 47% 15%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 25%;
+  }
+}
