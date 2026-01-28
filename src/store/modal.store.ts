@@ -3,6 +3,9 @@ import { create } from "zustand";
 interface ModalState {
   isOpen: boolean;
   isUserDetailOpen: boolean;
+  isCreateGroupOpen: boolean;
+  onCreateGroupOpen: () => void;
+  onCreateGroupClose: () => void;
   onOpen: () => void;
   onClose: () => void;
   onUserDetailOpen: () => void;
@@ -16,4 +19,7 @@ export const useModalStore = create<ModalState>((set) => ({
   isUserDetailOpen: false,
   onUserDetailOpen: () => set({ isUserDetailOpen: true }),
   onUserDetailClose: () => set({ isUserDetailOpen: false }),
+  isCreateGroupOpen: false,
+  onCreateGroupOpen: () => set({ isCreateGroupOpen: true }),
+  onCreateGroupClose: () => set({ isCreateGroupOpen: false }),
 }));
