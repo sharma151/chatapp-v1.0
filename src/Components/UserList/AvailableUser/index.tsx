@@ -37,7 +37,7 @@ const AvailableUser = () => {
     ? chatList
         .map((chat) => {
           const otherParticipant = chat.participants.find(
-            (p: { _id: string | undefined }) => p._id !== loggedInUserId
+            (p: { _id: string | undefined }) => p._id !== loggedInUserId,
           );
 
           if (!otherParticipant) {
@@ -47,6 +47,8 @@ const AvailableUser = () => {
           const lastMsg = chat.lastMessage;
 
           return {
+            Groupname: chat.name,
+            isGroup: chat.isGroupChat,
             chatId: chat._id,
             otherUsername: otherParticipant.username,
             otherAvatar: otherParticipant.avatar?.url || "",
@@ -83,7 +85,9 @@ const AvailableUser = () => {
                   />
                   <div className="flex flex-col">
                     <span className="text-gray-800 text-md">
-                      {chat?.otherUsername}
+                      {chat?.isGroup 
+                        ? chat?.Groupname
+                        : chat?.otherUsername}
                     </span>
                     <span className="text-xs text-gray-500 ">
                       {chat?.lastMessage?.content}
