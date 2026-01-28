@@ -1,6 +1,6 @@
 // src/routes/chats/index.tsx
 import { createFileRoute } from "@tanstack/react-router";
-import AppLayout from "@/Components/Layout/AppLayout";
+import AppLayout from "@/Layout/AppLayout";
 
 export const Route = createFileRoute("/chats/")({
   component: ChatsHomePage,
