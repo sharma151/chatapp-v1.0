@@ -7,7 +7,11 @@ import { formatChatData } from "@/utils/chat-utils";
 export const useActiveChat = () => {
   const { chatId } = useParams({ strict: false });
 
-  const { chatList, isLoading } = useChat() as { chatList: any[]; isLoading: boolean };
+  const { chatList, isLoading } = useChat() as {
+    chatList: any[];
+    isLoading: boolean;
+  };
+  console.log("chatList in useActiveChat:", chatList);
   const loggedInUserId = useAuthStore((state) => state.user?.id);
 
   const activeChat = useMemo(() => {

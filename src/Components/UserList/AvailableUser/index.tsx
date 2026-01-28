@@ -8,17 +8,12 @@ import type { MenuProps } from "antd";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "@tanstack/react-router";
 import { useAuthStore } from "@/store/auth.store";
-import {
-  useChatDetailStore,
-  type SelectedChatData,
-} from "@/store/userchatDetail.store";
 import { formatChatData } from "@/utils/chat-utils";
 
 const AvailableUser = () => {
   const { chatList, DeleteChat } = useChat();
   const navigate = useNavigate();
   const loggedInUserID = useAuthStore.getState().user;
-  const { setSelectedChat } = useChatDetailStore();
   const items: MenuProps["items"] = [
     { key: "Delete", label: "Delete", icon: <MdDelete size={16} /> },
   ];
@@ -29,8 +24,11 @@ const AvailableUser = () => {
       DeleteChat(chatId);
     }
   };
-  const handleRowClick = (chat: SelectedChatData) => {
-    setSelectedChat(chat);
+  const handleRowClick = ({
+    chat,
+  }: {
+    chat: { chatId: string; otherUsername: string };
+  }) => {
     navigate({
       to: "/chats/$chatId",
       params: { chatId: chat.chatId },
@@ -40,7 +38,6 @@ const AvailableUser = () => {
 
   const loggedInUserId = loggedInUserID?.id;
 
-  // const formattedChats = Array.isArray(chatList)
   //   ? chatList
   //       .map((chat) => {
   //         const otherParticipant = chat.participants.find(

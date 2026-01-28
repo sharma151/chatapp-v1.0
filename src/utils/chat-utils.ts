@@ -1,10 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// A pure function to format a single chat object
-export const formatChatData = (chat: any, loggedInUserId: string | undefined) => {
+interface chatFormattedResponse {
+  Groupname: string;
+  name: string;
+  _id: string;
+  participants: any;
+  isGroupChat: boolean;
+  chatId: string;
+  otherUsername: string;
+  otherAvatar: string;
+  lastMessage: {
+    sender: { username: string };
+    content: string;
+  } | null;
+}
+
+export const formatChatData = (
+  chat: chatFormattedResponse,
+  loggedInUserId: string | undefined,
+) => {
   if (!chat || !loggedInUserId) return null;
 
   const otherParticipant = chat.participants.find(
-    (p: any) => p._id !== loggedInUserId
+    (p: any) => p._id !== loggedInUserId,
   );
 
   if (!otherParticipant) return null;
