@@ -19,7 +19,7 @@ const UserDetailCard = ({ onBack }: AllUsersListProps) => {
 
   return (
     <div className="bg-[#111b21] text-[#e9edef] h-screen w-full mx-auto flex flex-col font-sans overflow-hidden">
-      <div className="flex-1 overflow-y-auto relative">
+      <div className="flex-1 overflow-y-auto whatsapp-scrollbar relative">
         <div className="flex items-center p-5 pt-8">
           <button
             onClick={onBack}

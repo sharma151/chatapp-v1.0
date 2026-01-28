@@ -70,3 +70,33 @@
     --sidebar-border: 217 33% 25%;
   }
 }
+
+/* Base Scrollbar Styling */
+.whatsapp-scrollbar {
+  /* Firefox Support */
+  scrollbar-width: thin;
+  scrollbar-color: hsl(105, 38%, 28%) #f0f2f5;
+  overflow-y: auto; /* Ensures scroll behavior works */
+}
+
+/* WebKit Support (Chrome, Safari, Edge) */
+.whatsapp-scrollbar::-webkit-scrollbar {
+  width: 6px; /* Vertical scrollbar width */
+  height: 6px; /* Horizontal scrollbar height */
+}
+
+/* Track (Background) */
+.whatsapp-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Keeps it clean */
+}
+
+/* Thumb (The moving part) */
+.whatsapp-scrollbar::-webkit-scrollbar-thumb {
+  background-color: hsla(37, 89%, 124%, 0.2);
+  border-radius: 10px; /* Pill shape */
+}
+
+/* Thumb Hover State - The "WhatsApp Green" Pop */
+.whatsapp-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #25d366; /* Iconic WhatsApp Green */
+}
