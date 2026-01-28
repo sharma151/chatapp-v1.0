@@ -2,15 +2,13 @@ import { useState } from "react";
 import { FaArrowLeft, FaCheck, FaArrowRight, FaCamera } from "react-icons/fa"; // Added icons
 import { useChat } from "@/core/hooks/api/useChat";
 import defaultaimage from "@/assets/default-user.webp";
+import { useModalStore } from "@/store/modal.store";
 // import { useNavigate } from "@tanstack/react-router";
 
-interface CreateGroupChatProps {
-  onBack: () => void;
-}
-
-const CreateGroupChat = ({ onBack }: CreateGroupChatProps) => {
+const CreateGroupChat = () => {
+  const { onCreateGroupClose } = useModalStore();
   const { createGroupChat, availableUsers } = useChat(); // Assuming createGroupChat exists in your hook
-//   const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
   // State for group creation
   const [groupName, setGroupName] = useState("");
@@ -55,7 +53,7 @@ const CreateGroupChat = ({ onBack }: CreateGroupChatProps) => {
       {/* Header */}
       <div className="flex items-center gap-3 p-4 border-b border-gray-100 bg-gray-50">
         <button
-          onClick={onBack}
+          onClick={onCreateGroupClose}
           className="p-2 hover:bg-gray-200 rounded-full transition-colors text-gray-600"
         >
           <FaArrowLeft size={16} />
