@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useChat } from "@/core/hooks/api/useChat";
 import defaultaimage from "@/assets/default-user.webp";
 import CustomDropdown from "@/Components/UI/Dropdown";
@@ -11,6 +12,7 @@ import {
   useChatDetailStore,
   type SelectedChatData,
 } from "@/store/userchatDetail.store";
+import { formatChatData } from "@/utils/chat-utils";
 
 const AvailableUser = () => {
   const { chatList, DeleteChat } = useChat();
@@ -38,37 +40,40 @@ const AvailableUser = () => {
 
   const loggedInUserId = loggedInUserID?.id;
 
-  const formattedChats = Array.isArray(chatList)
-    ? chatList
-        .map((chat) => {
-          const otherParticipant = chat.participants.find(
-            (p: { _id: string | undefined }) => p._id !== loggedInUserId,
-          );
+  // const formattedChats = Array.isArray(chatList)
+  //   ? chatList
+  //       .map((chat) => {
+  //         const otherParticipant = chat.participants.find(
+  //           (p: { _id: string | undefined }) => p._id !== loggedInUserId,
+  //         );
 
-          if (!otherParticipant) {
-            return null;
-          }
+  //         if (!otherParticipant) {
+  //           return null;
+  //         }
 
-          const lastMsg = chat.lastMessage;
+  //         const lastMsg = chat.lastMessage;
 
-          return {
-            Groupname: chat.name,
-            isGroup: chat.isGroupChat,
-            chatId: chat._id,
-            otherUsername: otherParticipant.username,
-            otherAvatar: otherParticipant.avatar?.url || "",
-            lastMessage: lastMsg
-              ? {
-                  senderUsername: lastMsg.sender.username,
-                  content: lastMsg.content || "",
-                }
-              : null,
-          };
-        })
-        .filter((chat): chat is NonNullable<typeof chat> => chat !== null)
-    : [];
+  //         return {
+  //           Groupname: chat.name,
+  //           isGroup: chat.isGroupChat,
+  //           chatId: chat._id,
+  //           otherUsername: otherParticipant.username,
+  //           otherAvatar: otherParticipant.avatar?.url || "",
+  //           lastMessage: lastMsg
+  //             ? {
+  //                 senderUsername: lastMsg.sender.username,
+  //                 content: lastMsg.content || "",
+  //               }
+  //             : null,
+  //         };
+  //       })
+  //       .filter((chat): chat is NonNullable<typeof chat> => chat !== null)
+  //   : [];
 
-  
+  const formattedChats =
+    (Array.isArray(chatList) ? chatList : [])
+      ?.map((c: any) => formatChatData(c, loggedInUserId))
+      .filter(Boolean) || [];
 
   return (
     <>
@@ -76,7 +81,7 @@ const AvailableUser = () => {
         <h2 className="text-md font-semibold mb-2">Available Users</h2>
         <div className="space-y-1 overflow-y-auto max-h-96">
           {formattedChats.length > 0 ? (
-            formattedChats.map((chat) => (
+            formattedChats.map((chat: any) => (
               <div
                 key={chat?.chatId}
                 onClick={() => handleRowClick(chat)}
