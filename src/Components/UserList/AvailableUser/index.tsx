@@ -7,12 +7,16 @@ import type { MenuProps } from "antd";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "@tanstack/react-router";
 import { useAuthStore } from "@/store/auth.store";
+import {
+  useChatDetailStore,
+  type SelectedChatData,
+} from "@/store/userchatDetail.store";
 
 const AvailableUser = () => {
   const { chatList, DeleteChat } = useChat();
   const navigate = useNavigate();
   const loggedInUserID = useAuthStore.getState().user;
-
+  const { setSelectedChat } = useChatDetailStore();
   const items: MenuProps["items"] = [
     { key: "Delete", label: "Delete", icon: <MdDelete size={16} /> },
   ];
@@ -23,11 +27,12 @@ const AvailableUser = () => {
       DeleteChat(chatId);
     }
   };
-  const handleRowClick = (chatId: string, user?: string) => {
+  const handleRowClick = (chat: SelectedChatData) => {
+    setSelectedChat(chat);
     navigate({
       to: "/chats/$chatId",
-      params: { chatId: chatId },
-      search: { userId: user },
+      params: { chatId: chat.chatId },
+      search: { userId: chat.otherUsername },
     });
   };
 
@@ -60,8 +65,10 @@ const AvailableUser = () => {
               : null,
           };
         })
-        .filter(Boolean)
+        .filter((chat): chat is NonNullable<typeof chat> => chat !== null)
     : [];
+
+  
 
   return (
     <>
@@ -72,9 +79,7 @@ const AvailableUser = () => {
             formattedChats.map((chat) => (
               <div
                 key={chat?.chatId}
-                onClick={() =>
-                  handleRowClick(chat?.chatId, chat?.otherUsername)
-                }
+                onClick={() => handleRowClick(chat)}
                 className="flex items-center border-b justify-between border-gray-200 space-x-3 p-2 hover:rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
               >
                 <div className="flex items-center gap-3">
@@ -85,9 +90,7 @@ const AvailableUser = () => {
                   />
                   <div className="flex flex-col">
                     <span className="text-gray-800 text-md">
-                      {chat?.isGroup 
-                        ? chat?.Groupname
-                        : chat?.otherUsername}
+                      {chat?.isGroup ? chat?.Groupname : chat?.otherUsername}
                     </span>
                     <span className="text-xs text-gray-500 ">
                       {chat?.lastMessage?.content}
