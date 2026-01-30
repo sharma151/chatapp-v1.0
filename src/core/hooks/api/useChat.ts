@@ -42,6 +42,7 @@ export const useChat = () => {
 
   return {
     chatList: fetchChatList?.data?.data,
+    isLoading: fetchChatList.isLoading,
     availableUsers: fetchAvailableUsers?.data?.data,
     DeleteChat: DeleteChat.mutate,
     createOneToOneChat: createOneToOneChat.mutate,

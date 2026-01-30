@@ -23,3 +23,15 @@ export interface AxiosPaginatedResponseInterface<T> {
     };
   };
 }
+
+export interface AvailableUsersResponse {
+  admin: string;
+  createdAt: string;
+  isGroupChat: boolean;
+  name: string;
+  participants: UserResponse[];
+  lastMessage: string;
+  updatedAt: string;
+  __v: number;
+  _id: string;
+}
