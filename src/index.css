@@ -1,74 +1,139 @@
 @import "tailwindcss";
 
-/* -----------------------------
-   Design Tokens (Theme)
--------------------------------- */
-@theme inline {
-  /* ==========================================================================
-	  FONT-FAMILIES
-	  ========================================================================== */
+/* 1. THEME VARIABLES */
+:root {
+  /* Backgrounds */
+  --bg-main: #0b141a; /* Main chat area bg */
+  --bg-sidebar: #111b21; /* Contact list bg */
+  --bg-panel: #202c33; /* Navbars and headers */
+  --bg-input: #2a3942; /* Search bars and message input */
 
-  --font-family-sans:
-    -apple-system, "Archivo", BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+  /* Message Bubbles */
+  --bubble-sent: #005c4b; /* "Outgoing" green bubble */
+  --bubble-received: #202c33; /* "Incoming" dark gray bubble */
 
-  --font-family-mono:
-    "Archivo", source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  /* Action & Status */
+  --accent: #00a884; /* WhatsApp green (checkmarks, buttons) */
+  --hover: #2a3942; /* List item hover state */
+  --active-list: #2a3942; /* Selected contact item bg */
 
-  /* ==========================================================================
-	  COLOR PALETTES
-	  ========================================================================== */
+  /* Text & Icons */
+  --text-primary: #e9edef; /* Main headers and names */
+  --text-secondary: #8696a0; /* Message previews and timestamps */
+  --text-msg: #d1d7db; /* The text inside the messages */
+  --icon-color: #aebac1; /* SVG icon fill color */
 
-  --color-blue-50: #d3dcff;
-  --color-blue-100: #b6c5ff;
-  --color-blue-200: #92a7ff;
-  --color-blue-300: #6e8aff;
-  --color-blue-400: #496dff;
-  --color-blue-500: #2550ff;
-  --color-blue-600: #1f43d4;
-  --color-blue-700: #1935aa;
-  --color-blue-800: #132880;
-  --color-blue-900: #0c1b55;
-
-  --color-neutral-50: #d4d4d6;
-  --color-neutral-100: #b7b8ba;
-  --color-neutral-200: #939497;
-  --color-neutral-300: #707175;
-  --color-neutral-400: #4c4e53;
-  --color-neutral-500: #282a30;
-  --color-neutral-600: #212328;
-  --color-neutral-700: #1b1c20;
-  --color-neutral-800: #141518;
-  --color-neutral-900: #0d0e10;
-
-  /* Base */
-  --background: 0 0% 100%;
-  --foreground: 222 47% 11%;
-
-  /* Sidebar */
-  --sidebar: #ff134f;
-  --sidebar-foreground: 222 47% 11%;
-  --sidebar-border: 214 32% 91%;
-
-  /* Brand */
-  --primary: 222 89% 53%;
-  --primary-foreground: 0 0% 100%;
+  /* Borders & Dividers */
+  --border-subtle: #222d34; /* Divider lines between contacts */
+  --scrollbar-thumb: #374045; /* Scrollbar color */
 }
 
-/* -----------------------------
-   Dark Mode
--------------------------------- */
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+/* 2. GLOBAL RESET & SCROLLBAR */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    --sidebar: 222 47% 15%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 25%;
-  }
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+}
+
+/* 3. LAYOUT COMPONENTS */
+
+/* Sidebar Navigation & Search */
+.sidebar {
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-subtle);
+}
+
+.sidebar-header {
+  background-color: var(--bg-panel);
+  color: var(--icon-color);
+  padding: 10px 16px;
+}
+
+.search-container {
+  background-color: var(--bg-sidebar);
+  padding: 8px 12px;
+}
+
+.search-input {
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+
+/* Contact List Item */
+.contact-item {
+  background-color: var(--bg-sidebar);
+  transition: background 0.1s ease-in-out;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.contact-item:hover {
+  background-color: var(--hover);
+  cursor: pointer;
+}
+
+.contact-item.active {
+  background-color: var(--active-list);
+}
+
+/* Main Chat Header & Footer */
+.chat-header {
+  background-color: var(--bg-panel);
+  display: flex;
+  align-items: center;
+}
+
+.chat-input-area {
+  background-color: var(--bg-panel);
+  padding: 10px;
+}
+
+/* Chat Bubbles */
+.message {
+  max-width: 65%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  font-size: 14.2px;
+  color: var(--text-msg);
+}
+
+.message-sent {
+  background-color: var(--bubble-sent);
+  align-self: flex-end;
+  border-top-right-radius: 0; /* WhatsApp "tail" look */
+}
+
+.message-received {
+  background-color: var(--bubble-received);
+  align-self: flex-start;
+  border-top-left-radius: 0;
+}
+
+.timestamp {
+  font-size: 11px;
+  color: var(--text-secondary);
+  float: right;
+  margin-top: 4px;
+  margin-left: 8px;
 }
 
 /* Base Scrollbar Styling */
