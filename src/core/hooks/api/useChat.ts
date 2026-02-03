@@ -1,7 +1,8 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ChatService from "@/core/services/chat.service";
 
 export const useChat = () => {
+  const queryClient = useQueryClient();
   //Fetch Available user list
   const fetchAvailableUsers = useQuery({
     queryKey: ["availableUsers"],
@@ -40,6 +41,22 @@ export const useChat = () => {
     },
   });
 
+  // Fetch Group Chats by ID
+  const FetchGroupChatsById = useMutation({
+    mutationFn: (chatId: string) => ChatService.GetGroupChatById(chatId),
+  });
+
+  //Update Group Chat Name
+  const UpdateGroupChatName = useMutation({
+    mutationFn: (payload: { chatId: string; name: string }) => {
+      return ChatService.RenameGroupChat(payload.chatId, payload.name);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chatList"] });
+      // queryClient.invalidateQueries({ queryKey: ["activeChat"] });
+    },
+  });
+
   return {
     chatList: fetchChatList?.data?.data,
     isLoading: fetchChatList.isLoading,
@@ -47,5 +64,7 @@ export const useChat = () => {
     DeleteChat: DeleteChat.mutate,
     createOneToOneChat: createOneToOneChat.mutate,
     createGroupChat: CreateGroupChat.mutate,
+    fetchGroupChatsById: FetchGroupChatsById.mutate,
+    updateGroupChatName: UpdateGroupChatName.mutate,
   };
 };

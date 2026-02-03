@@ -3,7 +3,6 @@ import { AxiosError } from "axios";
 import { handleError } from "@/utils/http.utils";
 
 import type { AxiosResponseInterface } from "@/@types/responses/api-response";
-
 class ChatService {
   //Fetch all users
   static async GetAllUser() {
@@ -118,7 +117,7 @@ class ChatService {
   //Update Group Chat Name
   static async RenameGroupChat(chatId: string, name: string) {
     try {
-      const response = await httpBase.put(`/chat-app/chats/group/${chatId}`, {
+      const response = await httpBase.patch(`/chat-app/chats/group/${chatId}`, {
         name,
       });
       return response?.data;
