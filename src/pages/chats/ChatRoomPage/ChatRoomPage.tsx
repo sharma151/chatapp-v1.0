@@ -3,8 +3,8 @@ import ChatService from "@/core/services/chat.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ChatRoomNav from "@/pages/chats/ChatRoomNav";
 import { useAuthStore } from "@/store/auth.store";
-import { useChat } from "@/core/hooks/api/useChat";
-import { useNavigate } from "@tanstack/react-router";
+// import { useChat } from "@/core/hooks/api/useChat";
+// import { useNavigate } from "@tanstack/react-router";
 import type { MenuProps } from "antd";
 import { MdDelete } from "react-icons/md";
 import CustomDropdown from "@/Components/UI/Dropdown";
@@ -40,8 +40,8 @@ const ChatRoomPage = ({ chatId }: ChatRoomPageProps) => {
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
-  const { DeleteChat } = useChat();
-  const navigate = useNavigate();
+  // const { DeleteChat } = useChat();
+  // const navigate = useNavigate();
 
   // GET USER CHAT MESSAGES
   const { data: messages, isLoading } = useQuery({
@@ -98,12 +98,6 @@ const ChatRoomPage = ({ chatId }: ChatRoomPageProps) => {
     });
   };
 
-  const handleDeleteChat = () => {
-    DeleteChat(chatId);
-    navigate({
-      to: "/chats",
-    });
-  };
   const handleMenuClick = (_id: string) => {
     DeleteMessage.mutate({ chatId, messageId: _id });
   };
@@ -127,7 +121,7 @@ const ChatRoomPage = ({ chatId }: ChatRoomPageProps) => {
   ];
   return (
     <div className="flex flex-col h-screen bg-[#efeae2]">
-      <ChatRoomNav handleMenuClick={handleDeleteChat} />
+      <ChatRoomNav  />
       <div className="flex-1 overflow-y-scroll p-4 flex flex-col space-y-3">
         {messages?.map((message: Message) => {
           const isSender = message.sender._id === loggedInUserID?.id;
