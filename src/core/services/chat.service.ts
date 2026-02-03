@@ -92,5 +92,80 @@ class ChatService {
       throw handleError(error as AxiosError);
     }
   }
+
+  //Fetch Group Chats Details by ID
+  static async GetGroupChatById(chatId: string) {
+    try {
+      const response = await httpBase.get(`/chat-app/chats/group/${chatId}`);
+      return response?.data?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
+
+  //DELETE Group Chat by ID
+  static async DeleteGroupChat(chatId: string) {
+    try {
+      const response = await httpBase.delete(
+        `/chat-app/chats/group/remove/${chatId}`,
+      );
+      return response?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
+
+  //Update Group Chat Name
+  static async RenameGroupChat(chatId: string, name: string) {
+    try {
+      const response = await httpBase.put(`/chat-app/chats/group/${chatId}`, {
+        name,
+      });
+      return response?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
+
+  //Add Participant to Group Chat
+  static async AddParticipantToGroupChat(
+    chatId: string,
+    participantId: string,
+  ) {
+    try {
+      const response = await httpBase.post(
+        `/chat-app/chats/group/${chatId}/${participantId}`,
+      );
+      return response?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
+
+  //  Remove Participant from Group Chat
+  static async RemoveParticipantFromGroupChat(
+    chatId: string,
+    participantId: string,
+  ) {
+    try {
+      const response = await httpBase.delete(
+        `/chat-app/chats/group/${chatId}/${participantId}`,
+      );
+      return response?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
+  //Leave Group Chat
+  static async LeaveGroupChat(chatId: string) {
+    try {
+      const response = await httpBase.delete(
+        `/chat-app/chats/leave/group/${chatId}`,
+      );
+      return response?.data;
+    } catch (error) {
+      throw handleError(error as AxiosError);
+    }
+  }
 }
 export default ChatService;
