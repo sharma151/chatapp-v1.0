@@ -17,11 +17,10 @@ export const Route = createFileRoute("/chats/$chatId")({
 
 function ChatRoute() {
   const { chatId } = Route.useParams();
-  const { userId } = Route.useSearch();
 
   return (
     <AppLayout>
-      <ChatRoomPage chatId={chatId} userName={userId} />
+      <ChatRoomPage chatId={chatId} />
     </AppLayout>
   );
 }

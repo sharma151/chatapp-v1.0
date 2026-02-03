@@ -2,6 +2,7 @@
 
 import { useChat } from "@/core/hooks/api/useChat";
 import defaultaimage from "@/assets/default-user.webp";
+import groupImage from "@/assets/grp-img.webp";
 import CustomDropdown from "@/Components/UI/Dropdown";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import type { MenuProps } from "antd";
@@ -24,15 +25,12 @@ const AvailableUser = () => {
       DeleteChat(chatId);
     }
   };
-  const handleRowClick = ({
-    chat,
-  }: {
-    chat: { chatId: string; otherUsername: string };
-  }) => {
+  const handleRowClick = ({ chatID }: { chatID: string }) => {
+    console.log("Navigating to chat with ID:", chatID);
     navigate({
       to: "/chats/$chatId",
-      params: { chatId: chat.chatId },
-      search: { userId: chat.otherUsername },
+      params: { chatId: chatID },
+      // search: { userId: chat.otherUsername },
     });
   };
 
@@ -72,6 +70,8 @@ const AvailableUser = () => {
       ?.map((c: any) => formatChatData(c, loggedInUserId))
       .filter(Boolean) || [];
 
+  // console.log("Formatted Chats:", formattedChats);
+
   return (
     <>
       <div className="p-4 ">
@@ -81,15 +81,25 @@ const AvailableUser = () => {
             formattedChats.map((chat: any) => (
               <div
                 key={chat?.chatId}
-                onClick={() => handleRowClick(chat)}
+                onClick={() => {
+                  handleRowClick({ chatID: chat?.chatId });
+                }}
                 className="flex items-center border-b justify-between border-gray-200 space-x-3 p-2 hover:rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  <img
-                    src={chat?.otherAvatar || defaultaimage}
-                    alt={chat?.otherUsername}
-                    className="w-10 h-10 rounded-full"
-                  />
+                  {chat?.isGroup ? (
+                    <img
+                      src={groupImage}
+                      alt={chat?.otherUsername}
+                      className="w-10 h-10 rounded-full object-fill object-center"
+                    />
+                  ) : (
+                    <img
+                      src={chat?.otherAvatar || defaultaimage}
+                      alt={chat?.otherUsername}
+                      className="w-10 h-10 rounded-full"
+                    />
+                  )}
                   <div className="flex flex-col">
                     <span className="text-gray-800 text-md">
                       {chat?.isGroup ? chat?.Groupname : chat?.otherUsername}
