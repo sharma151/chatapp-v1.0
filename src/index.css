@@ -29,13 +29,9 @@
 }
 
 /* 2. GLOBAL RESET & SCROLLBAR */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body {
+
+/* body {
   background-color: var(--bg-main);
   color: var(--text-primary);
   font-family:
@@ -49,7 +45,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background-color: var(--scrollbar-thumb);
-}
+} */
 
 /* 3. LAYOUT COMPONENTS */
 

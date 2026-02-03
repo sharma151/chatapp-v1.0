@@ -11,7 +11,6 @@ export const useActiveChat = () => {
     chatList: any[];
     isLoading: boolean;
   };
-  console.log("chatList in useActiveChat:", chatList);
   const loggedInUserId = useAuthStore((state) => state.user?.id);
 
   const activeChat = useMemo(() => {

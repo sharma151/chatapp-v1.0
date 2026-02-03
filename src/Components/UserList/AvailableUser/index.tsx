@@ -24,15 +24,12 @@ const AvailableUser = () => {
       DeleteChat(chatId);
     }
   };
-  const handleRowClick = ({
-    chat,
-  }: {
-    chat: { chatId: string; otherUsername: string };
-  }) => {
+  const handleRowClick = ({ chatID }: { chatID: string }) => {
+    console.log("Navigating to chat with ID:", chatID);
     navigate({
       to: "/chats/$chatId",
-      params: { chatId: chat.chatId },
-      search: { userId: chat.otherUsername },
+      params: { chatId: chatID },
+      // search: { userId: chat.otherUsername },
     });
   };
 
@@ -72,6 +69,8 @@ const AvailableUser = () => {
       ?.map((c: any) => formatChatData(c, loggedInUserId))
       .filter(Boolean) || [];
 
+  // console.log("Formatted Chats:", formattedChats);
+
   return (
     <>
       <div className="p-4 ">
@@ -81,7 +80,9 @@ const AvailableUser = () => {
             formattedChats.map((chat: any) => (
               <div
                 key={chat?.chatId}
-                onClick={() => handleRowClick(chat)}
+                onClick={() => {
+                  handleRowClick({ chatID: chat?.chatId });
+                }}
                 className="flex items-center border-b justify-between border-gray-200 space-x-3 p-2 hover:rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
               >
                 <div className="flex items-center gap-3">
