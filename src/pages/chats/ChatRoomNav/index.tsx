@@ -1,8 +1,8 @@
 import { useState } from "react";
 import CustomDropdown from "@/Components/UI/Dropdown";
 import type { MenuProps } from "antd";
-import { BsThreeDotsVertical, BsCheckLg } from "react-icons/bs"; // Added check icon
-import { MdDelete, MdClose } from "react-icons/md"; // Added close icon
+import { BsThreeDotsVertical, BsCheckLg } from "react-icons/bs";
+import { MdDelete, MdClose } from "react-icons/md";
 import { useActiveChat } from "@/core/hooks/common/useActiveChat";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FaUserEdit } from "react-icons/fa";
@@ -37,7 +37,7 @@ const ChatRoomNav = () => {
     if (e.key === "Rename") {
       setTempName(activeChat?.Groupname || "");
       setIsRenaming(true);
-    }
+    } 
     if (e.key === "Delete") {
       DeleteChat(activeChat?.chatId || "");
       navigate({
