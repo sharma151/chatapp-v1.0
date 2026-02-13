@@ -14,18 +14,14 @@ const AllUsersList = ({ onBack }: AllUsersListProps) => {
   const { onCreateGroupOpen } = useModalStore();
   const navigate = useNavigate();
 
-  const handleStartChat = (userId: number) => {
+  const handleStartChat = (userId: { UserId: string }) => {
     onBack();
-    createOneToOneChat(userId.toString());
+    createOneToOneChat(userId.UserId);
     navigate({
-      to: "/chats/$chatId",
-      params: { chatId: userId.toString() },
-      // search: { userId: userId },
+      to: "/chats",
     });
   };
-  const handleOpenCreateGroup = () => {
-    onCreateGroupOpen();
-  };
+
 
   return (
     <div className="h-screen w-full mx-auto flex flex-col font-sans overflow-hidden">
@@ -41,7 +37,7 @@ const AllUsersList = ({ onBack }: AllUsersListProps) => {
         </div>
         <div
           className="px-4 border-b border-gray-200"
-          onClick={handleOpenCreateGroup}
+          onClick={onCreateGroupOpen}
         >
           <div className="p-4 bg-white  flex items-center gap-4">
             <MdGroups size={22} />{" "}
@@ -56,7 +52,7 @@ const AllUsersList = ({ onBack }: AllUsersListProps) => {
               <div
                 key={user._id}
                 className="flex items-center border-b  justify-between border-gray-200 space-x-3  p-2 hover:rounded-lg hover:bg-gray-100"
-                onClick={() => handleStartChat(user._id)}
+                onClick={() => handleStartChat({ UserId: user?._id })}
               >
                 {" "}
                 <div className="flex  items-center gap-3">
