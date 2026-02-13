@@ -16,7 +16,7 @@ const AvailableUser = () => {
   const navigate = useNavigate();
   const loggedInUserID = useAuthStore.getState().user;
   const items: MenuProps["items"] = [
-    { key: "Delete", label: "Delete", icon: <MdDelete size={16} /> },
+    { key: "Delete", label: "Delete Chat", icon: <MdDelete size={16} /> },
   ];
 
   const handleMenuClick = (e: any, chatId: string) => {
